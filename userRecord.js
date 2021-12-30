@@ -1,5 +1,5 @@
-const client = require("../../index");
-const levelSystem = require('../../MongoDB/levelModel');
+const client = require("./index");
+const levelSystem = require('./levelModel');
 
 client.on('guildMemberAdd', async (member) => {
     levelSystem.insertMany([
