@@ -1,5 +1,5 @@
 const { Client, CommandInteraction } = require('discord.js');
-const levelSystem = require('../../MongoDB/levelModel');
+const levelSystem = require('./levelModel');
 
 module.exports = {
     name: 'level-system',
