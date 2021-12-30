@@ -3,17 +3,17 @@ const levelSystem = require('./levelModel');
 
 module.exports = {
     name: 'level-system',
-    description: '🧰 Staff | Specjalne komendy systemu poziomów',
+    description: '🧰 Staff | Commands for level system',
     userPermissions: ['ADMINISTRATOR'],
     options: [
         {
             name: 'manual-add',
-            description: '🧰 Staff | Manualnie dodaje użytkownika do systemu poziomów',
+            description: '🧰 Staff | Manual adds user to level system',
             type: 'SUB_COMMAND',
             options: [
                 {
                     name: 'user',
-                    description: 'Użytkownik za którym chcesz wykonać operację',
+                    description: 'User to add',
                     type: 'USER',
                     required: true
                 }
@@ -21,12 +21,12 @@ module.exports = {
         },
         {
             name: 'manual-remove',
-            description: '🧰 Staff | Manualnie usuwa użytkownika z systemu poziomów',
+            description: '🧰 Staff | Manual remove user from level system',
             type: 'SUB_COMMAND',
             options: [
                 {
                     name: 'member',
-                    description: 'Użytkownik za którym chcesz wykonać operację',
+                    description: 'User to remove',
                     type: 'USER',
                     required: true
                 }
@@ -45,7 +45,7 @@ module.exports = {
             const user = interaction.options.getUser('user');
 
             levelSystem.findOne({ userId: user.id }, async (err, data) => {
-                if(data) return interaction.followUp({ content: `\`🧰\` Ten użytkownik jest już w systemie poziomów` })
+                if(data) return interaction.followUp({ content: `\`🧰\` This user is already in the level system` })
             })
 
             levelSystem.insertMany([
@@ -55,15 +55,15 @@ module.exports = {
                     exp: 0,
                 }
             ]);
-            interaction.followUp({ content: `\`🧰\` Dodano ${user.username} do systemu poziomów` })
+            interaction.followUp({ content: `\`🧰\` Added ${user.username} to level system` })
 
         } else if(subcommand === 'manual-remove') {
             const member = interaction.options.getUser('member');
 
             levelSystem.findOne({ userId: member.id }, async (err, data) => {
                 if(data) data.delete();
-                if(!data) return interaction.followUp({ content: `\`🧰\` Tego użytkownika nie ma w systemie poziomów` })
-                interaction.followUp({ content: `\`🧰\` Usunięto ${member.username} z systemu poziomów` })
+                if(!data) return interaction.followUp({ content: `\`🧰\` This user is not in the level system` })
+                interaction.followUp({ content: `\`🧰\` Removed ${member.username} from level system` })
             })
         }
     },
