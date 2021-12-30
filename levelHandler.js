@@ -1,9 +1,9 @@
-const client = require("../../index");
-const levelSystem = require('../../MongoDB/levelModel');
+const client = require("./index");
+const levelSystem = require('./levelModel');
 
 client.on('messageCreate', async (message) => {
     if(message.author.bot) return;
-    const levelsChannel = message.guild.channels.cache.get('925762713689399306');
+    const levelsChannel = message.guild.channels.cache.get('<channel-id>');
     const userId = message.author.id
     const userLevel = await levelSystem.findOne({ userId });
 
@@ -25,7 +25,7 @@ client.on('messageCreate', async (message) => {
 
     if(userLevel.exp === nextLevelXp) {
         await levelSystem.updateOne({ userId }, { level: nextLevel, exp: 0 });
-        levelsChannel.send({ content: `<@${message.author.id}> wbił nowy poziom... Poziom \`${userLevel.level}\`` })
+        levelsChannel.send({ content: `<@${message.author.id}> has leveled up! Level: \`${userLevel.level}\`` })
     }
 
 })
